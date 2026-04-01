@@ -178,7 +178,7 @@ Return a detailed review as JSON with this EXACT structure:
           "Authorization": `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
-          model: "mixtral-8x7b-32768",
+          model: "llama-3.1-8b-instant",
           max_tokens: 4000,
           messages: [
             { role: "system", content: systemPrompt },
