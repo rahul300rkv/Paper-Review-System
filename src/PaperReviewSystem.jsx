@@ -43,15 +43,17 @@ const SeverityBadge = ({ level }) => {
     }}>{s.label}</span>
   );
 };
-
-function extractJSON(text) {
-  const fence = text.match(/```(?:json)?\s*([\s\S]*?)```/);
-  if (fence) return JSON.parse(fence[1].trim());
-  const brace = text.match(/\{[\s\S]*\}/);
-  if (brace) return JSON.parse(brace[0]);
-  throw new Error("No JSON found");
+function extractJSONSafe(text) {
+  try {
+    const fence = text.match(/```(?:json)?\s*([\s\S]*?)```/);
+    const raw = fence ? fence[1] : text.match(/\{[\s\S]*\}/)?.[0];
+    if (!raw) throw new Error("No JSON found");
+    return JSON.parse(raw);
+  } catch (e) {
+    console.error("JSON parse failed:", e);
+    return null;
+  }
 }
-
 export default function PaperReviewSystem({ apiKey, onClearKey }) {
   const [tab, setTab] = useState("upload");
   const [paperText, setPaperText] = useState("");
