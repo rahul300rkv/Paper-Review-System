@@ -24,7 +24,7 @@ Open http://localhost:5173 — enter your groq API key when prompted or use gsk_
 
 - React 18
 - Vite 5
-- No other dependencies
+- Groq API
 
 ## Notes
 
