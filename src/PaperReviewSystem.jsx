@@ -171,19 +171,19 @@ Return a detailed review as JSON with this EXACT structure:
 }`;
 
     try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
+      const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": apiKey,
-          "anthropic-version": "2023-06-01",
-          "anthropic-dangerous-direct-browser-access": "true",
+          "Authorization": `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
+          model: "mixtral-8x7b-32768",
           max_tokens: 4000,
-          system: systemPrompt,
-          messages: [{ role: "user", content: userPrompt }]
+          messages: [
+            { role: "system", content: systemPrompt },
+            { role: "user", content: userPrompt }
+          ]
         })
       });
       clearInterval(phaseInterval);
@@ -193,7 +193,7 @@ Return a detailed review as JSON with this EXACT structure:
         throw new Error(errData.error?.message || `API error ${res.status}`);
       }
       const data = await res.json();
-      const raw = data.content.map(b => b.text || "").join("");
+      const raw = data.choices[0].message.content;
       const parsed = extractJSON(raw);
       setReview(parsed);
       setTab("overview");
@@ -218,26 +218,24 @@ Return a detailed review as JSON with this EXACT structure:
 
     const context = `You reviewed this paper: "${paperTitle}". Review result: ${JSON.stringify(review)}. Answer the author's question concisely and helpfully.`;
     try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
+      const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": apiKey,
-          "anthropic-version": "2023-06-01",
-          "anthropic-dangerous-direct-browser-access": "true",
+          "Authorization": `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
+          model: "mixtral-8x7b-32768",
           max_tokens: 600,
-          system: context,
           messages: [
+            { role: "system", content: context },
             ...chatHistory.map(m => ({ role: m.role === "user" ? "user" : "assistant", content: m.text })),
             { role: "user", content: userMsg }
           ]
         })
       });
       const data = await res.json();
-      const reply = data.content.map(b => b.text || "").join("");
+      const reply = data.choices[0].message.content;
       setChatHistory(h => [...h, { role: "assistant", text: reply }]);
     } catch {
       setChatHistory(h => [...h, { role: "assistant", text: "Sorry, I couldn't process that. Please try again." }]);

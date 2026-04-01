@@ -2,22 +2,22 @@ import { useState } from "react";
 import PaperReviewSystem from "./PaperReviewSystem.jsx";
 
 export default function App() {
-  const [apiKey, setApiKey] = useState(() => localStorage.getItem("anthropic_key") || "");
+  const [apiKey, setApiKey] = useState(() => localStorage.getItem("groq_key") || "");
   const [inputKey, setInputKey] = useState("");
   const [keyError, setKeyError] = useState("");
 
   const handleSave = () => {
     const k = inputKey.trim();
-    if (!k.startsWith("sk-ant-")) {
-      setKeyError("Key should start with sk-ant-...");
+    if (!k.startsWith("gsk_")) {
+      setKeyError("Key should start with gsk_...");
       return;
     }
-    localStorage.setItem("anthropic_key", k);
+    localStorage.setItem("groq_key", k);
     setApiKey(k);
   };
 
   const handleClear = () => {
-    localStorage.removeItem("anthropic_key");
+    localStorage.removeItem("groq_key");
     setApiKey("");
     setInputKey("");
   };
@@ -51,19 +51,19 @@ export default function App() {
           </div>
 
           <p style={{ fontSize: 15, color: "var(--color-text-secondary)", lineHeight: 1.7, marginBottom: 32, fontStyle: "italic" }}>
-            Enter your Anthropic API key to start analyzing research papers.
+            Enter your Groq API key to start analyzing research papers.
           </p>
 
           <div style={{ textAlign: "left", marginBottom: 16 }}>
             <label style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--color-text-secondary)", display: "block", marginBottom: 8 }}>
-              Anthropic API Key
+              Groq API Key
             </label>
             <input
               type="password"
               value={inputKey}
               onChange={e => { setInputKey(e.target.value); setKeyError(""); }}
               onKeyDown={e => e.key === "Enter" && handleSave()}
-              placeholder="sk-ant-api03-..."
+              placeholder="gsk_..."
               style={{
                 width: "100%",
                 padding: "11px 14px",
@@ -102,8 +102,8 @@ export default function App() {
           </button>
 
           <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: "var(--color-text-secondary)", lineHeight: 1.6 }}>
-            Your key is stored locally in your browser and never sent anywhere except directly to Anthropic's API.{" "}
-            <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noreferrer" style={{ color: "inherit", textDecoration: "underline" }}>
+            Your key is stored locally in your browser and never sent anywhere except directly to Groq's API.{" "}
+            <a href="https://console.groq.com/keys" target="_blank" rel="noreferrer" style={{ color: "inherit", textDecoration: "underline" }}>
               Get a key →
             </a>
           </p>
