@@ -1,6 +1,6 @@
 # Scholaris — Pre-Submission Paper Review System
 
-An AI-powered academic paper review tool that provides expert peer-review quality feedback before submission. Built with React + Vite, powered by Claude (Anthropic API).
+An AI-powered academic paper review tool that provides expert peer-review quality feedback before submission. Built with React + Vite, powered by Groq AI
 
 ## Features
 
@@ -24,11 +24,10 @@ Open http://localhost:5173 — enter your groq API key when prompted or use gsk_
 
 - React 18
 - Vite 5
-- Anthropic Claude API (`claude-sonnet-4-20250514`)
 - No other dependencies
 
 ## Notes
 
 - API key is stored only in the user's browser localStorage
-- Paper text is sent directly to Anthropic's API — nothing is stored server-side
+- Paper text is sent directly to Groq's API — nothing is stored server-side
 - First 8,000 characters of the paper are analyzed
