@@ -18,25 +18,7 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:5173 — enter your Anthropic API key when prompted.
-
-## Deploy to Vercel
-
-### Option A — Vercel CLI (fastest)
-```bash
-npm install -g vercel
-vercel
-```
-Follow the prompts. Done — you'll get a live URL.
-
-### Option B — Vercel Dashboard
-1. Push this repo to GitHub
-2. Go to [vercel.com](https://vercel.com) → New Project
-3. Import your GitHub repo
-4. Framework: **Vite** (auto-detected)
-5. Click **Deploy**
-
-No environment variables needed — users enter their own Anthropic API key in the UI (stored in localStorage).
+Open http://localhost:5173 — enter your groq API key when prompted or use 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
 
 ## Tech Stack
 
